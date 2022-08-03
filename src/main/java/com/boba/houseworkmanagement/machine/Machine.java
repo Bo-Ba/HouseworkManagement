@@ -1,6 +1,6 @@
 package com.boba.houseworkmanagement.machine;
 
-import com.boba.houseworkmanagement.User.MachineUser;
+import com.boba.houseworkmanagement.user.MachineUser;
 import com.boba.houseworkmanagement.machineState.State;
 import lombok.Getter;
 import lombok.Setter;
@@ -14,6 +14,7 @@ import java.util.List;
 public class Machine {
 
     @Id
+    @Getter
     @SequenceGenerator(
             name = "machine_sequence",
             sequenceName = "machine_sequence",
@@ -28,16 +29,23 @@ public class Machine {
     @Getter
     @Setter
     private String name, state;
-
+    @Getter
     @ManyToMany(mappedBy = "userMachines")
     private List<MachineUser> machineUsers = new ArrayList<>();
+
+    public Machine(Long machineId, String name, String state) {
+        this.machineId = machineId;
+        this.name = name;
+        this.state = state;
+    }
+
+    public Machine() {}
 
     public void addNewMachineUser(MachineUser machineUser) {
         if(!machineUsers.contains(machineUser)) {
             machineUsers.add(machineUser);
         }
     }
-
     public void doWork(State state) {
         state.next(this);
     }

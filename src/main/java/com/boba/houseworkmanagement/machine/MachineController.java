@@ -1,6 +1,6 @@
 package com.boba.houseworkmanagement.machine;
 
-import com.boba.houseworkmanagement.User.MachineUser;
+import com.boba.houseworkmanagement.user.MachineUser;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,6 +23,11 @@ public class MachineController {
     @PostMapping
     public void addNewMachine(@RequestBody Machine machine) {
         machineService.addNewMachine(machine);
+    }
+
+    @GetMapping("/work/{machineId}")
+    public Machine doWorkMachine(@PathVariable Long machineId) {
+        return machineService.doWork(machineId);
     }
 
 }

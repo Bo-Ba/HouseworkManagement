@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class DishwasherToPackState extends State {
-    private final static String STATE_NAME = "Dishwasher ready to pack";
+    public final static String STATE_NAME = "Dishwasher ready to pack";
 
     public DishwasherToPackState() {
         super(STATE_NAME);

@@ -1,4 +1,4 @@
-package com.boba.houseworkmanagement.User;
+package com.boba.houseworkmanagement.user;
 
 import com.boba.houseworkmanagement.machine.Machine;
 import lombok.Getter;
@@ -27,16 +27,25 @@ public class MachineUser {
     @Getter
     private String username;
 
-    @ManyToMany(cascade = { CascadeType.ALL })
+    @ManyToMany(cascade = {CascadeType.ALL})
     @JoinTable(
             name = "MachineUser_Machine",
-            joinColumns = { @JoinColumn(name = "MachineUserId") },
-            inverseJoinColumns = { @JoinColumn(name = "MachineId") }
+            joinColumns = {@JoinColumn(name = "MachineUserId")},
+            inverseJoinColumns = {@JoinColumn(name = "MachineId")}
     )
-    private List<Machine> userMachines = new ArrayList<>();
+    private final List<Machine> userMachines = new ArrayList<>();
+
+    public MachineUser() {
+
+    }
+
+    public MachineUser(Long machineUserId, String username) {
+        this.machineUserId = machineUserId;
+        this.username = username;
+    }
 
     public void addNewUserMachine(Machine machine) {
-        if(!userMachines.contains(machine)) {
+        if (!userMachines.contains(machine)) {
             userMachines.add(machine);
         }
     }

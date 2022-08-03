@@ -1,4 +1,4 @@
-package com.boba.houseworkmanagement.User;
+package com.boba.houseworkmanagement.user;
 
 import com.boba.houseworkmanagement.machine.Machine;
 import org.springframework.web.bind.annotation.*;
@@ -17,21 +17,21 @@ public class MachineUserController {
 
     @GetMapping
     public List<MachineUser> getPeople(){
-        return personService.getPeople();
+        return personService.getMachineUsers();
     }
 
     @GetMapping("/{username}")
     public MachineUser getPeople(@PathVariable String username){
-        return personService.getPersonByUsername(username);
+        return personService.getUserByUsername(username);
     }
 
     @PostMapping
     public void registerNewPerson(@RequestBody MachineUser machineUser) {
-        personService.addNewPerson(machineUser);
+        personService.addNewMachineUsers(machineUser);
     }
 
     @GetMapping("/machines/{personId}")
     public List<Machine> getUserMachine(@PathVariable Long personId) {
-        return personService.getUserMachine(personId);
+        return personService.getUserMachines(personId);
     }
 }

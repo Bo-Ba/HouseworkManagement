@@ -1,7 +1,7 @@
 package com.boba.houseworkmanagement.machine;
 
 
-import com.boba.houseworkmanagement.User.MachineUser;
+import com.boba.houseworkmanagement.user.MachineUser;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
