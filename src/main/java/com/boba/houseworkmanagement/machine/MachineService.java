@@ -1,13 +1,12 @@
 package com.boba.houseworkmanagement.machine;
 
+import com.boba.houseworkmanagement.machineState.StateRepository;
 import com.boba.houseworkmanagement.schedule.WorkScheduleService;
 import com.boba.houseworkmanagement.user.MachineUser;
 import com.boba.houseworkmanagement.user.MachineUserService;
-import com.boba.houseworkmanagement.machineState.State;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.HashMap;
 import java.util.List;
 
 @Service
@@ -15,15 +14,16 @@ public class MachineService {
 
     private final MachineRepository machineRepository;
     private final MachineUserService machineUserService;
-    private final HashMap<String, State> dishwasherStates;
     private final WorkScheduleService workScheduleService;
 
+    private final StateRepository stateRepository;
+
     public MachineService(MachineRepository machineRepository, MachineUserService machineUserService,
-                          HashMap<String, State> dishwasherStates, WorkScheduleService workScheduleService) {
+                          WorkScheduleService workScheduleService, StateRepository stateRepository) {
         this.machineRepository = machineRepository;
         this.machineUserService = machineUserService;
-        this.dishwasherStates = dishwasherStates;
         this.workScheduleService = workScheduleService;
+        this.stateRepository = stateRepository;
     }
 
     public List<MachineUser> getMachineUsers(Long machineId) {
@@ -48,8 +48,8 @@ public class MachineService {
         var machine = housework.getMachine();
         var attender = housework.getAttender();
 
-        machine.doWork(dishwasherStates.get(machine.getState()));
-        housework.setAttender(dishwasherStates.get(machine.getState()).findNextAttender(machine, attender));
+        machine.doWork(machine.getState());
+        housework.setAttender(machine.getState().findNextAttender(attender));
         housework.setUserNotificationDate(LocalDateTime.now());
 
         machineRepository.save(machine);

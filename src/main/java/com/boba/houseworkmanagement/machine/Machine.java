@@ -1,5 +1,6 @@
 package com.boba.houseworkmanagement.machine;
 
+import com.boba.houseworkmanagement.machineState.DishwasherToPackState;
 import com.boba.houseworkmanagement.user.MachineUser;
 import com.boba.houseworkmanagement.machineState.State;
 import lombok.Getter;
@@ -9,10 +10,11 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.hibernate.annotations.Cascade;
+
 @Entity
 @Table
 public class Machine {
-
     @Id
     @Getter
     @SequenceGenerator(
@@ -28,18 +30,25 @@ public class Machine {
 
     @Getter
     @Setter
-    private String name, state;
+    private String name;
+    @Getter
+    @Setter
+    @OneToOne(cascade = CascadeType.ALL)
+    private State state;
     @Getter
     @ManyToMany(mappedBy = "userMachines")
     private List<MachineUser> machineUsers = new ArrayList<>();
 
-    public Machine(Long machineId, String name, String state) {
+    public Machine(Long machineId, String name, State state) {
         this.machineId = machineId;
         this.name = name;
         this.state = state;
+        System.out.println("test");
     }
 
-    public Machine() {}
+    public Machine() {
+        System.out.println("test no param");
+    }
 
     public void addNewMachineUser(MachineUser machineUser) {
         if(!machineUsers.contains(machineUser)) {
@@ -49,4 +58,5 @@ public class Machine {
     public void doWork(State state) {
         state.next(this);
     }
+
 }
