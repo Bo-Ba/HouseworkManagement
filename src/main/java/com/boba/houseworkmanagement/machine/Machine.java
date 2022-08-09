@@ -36,26 +36,22 @@ public class Machine {
     @OneToOne(cascade = CascadeType.ALL)
     private State state;
     @Getter
-    @ManyToMany(mappedBy = "userMachines")
+    @ManyToMany(mappedBy = "userMachines", cascade = CascadeType.ALL)
     private List<MachineUser> machineUsers = new ArrayList<>();
 
-    public Machine(Long machineId, String name, State state) {
-        this.machineId = machineId;
+    public Machine(String name, State state) {
         this.name = name;
         this.state = state;
-        System.out.println("test");
     }
 
-    public Machine() {
-        System.out.println("test no param");
-    }
+    public Machine() {}
 
     public void addNewMachineUser(MachineUser machineUser) {
         if(!machineUsers.contains(machineUser)) {
             machineUsers.add(machineUser);
         }
     }
-    public void doWork(State state) {
+    public void doWork() {
         state.next(this);
     }
 

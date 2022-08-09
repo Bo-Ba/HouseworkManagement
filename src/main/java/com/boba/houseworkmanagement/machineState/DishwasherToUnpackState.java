@@ -13,20 +13,17 @@ import javax.persistence.Transient;
 public class DishwasherToUnpackState extends State {
     private final static String STATE_NAME = "Dishwasher ready to unpack";
 
-    @Transient
-    @Autowired
-    private DishwasherStatesFactory dishwasherStatesFactory;
-
     public DishwasherToUnpackState() {
         super(STATE_NAME);
     }
+
     @Override
     public void next(Machine machine) {
-        machine.setState(dishwasherStatesFactory.createDishwasherToPackState());
+        machine.setState(new DishwasherToPackState());
     }
 
     @Override
     public void prev(Machine machine) {
-        machine.setState(dishwasherStatesFactory.createDishwasherRunningState());
+        machine.setState(new DishwasherRunningState());
     }
 }

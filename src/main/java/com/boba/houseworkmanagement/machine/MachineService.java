@@ -48,7 +48,7 @@ public class MachineService {
         var machine = housework.getMachine();
         var attender = housework.getAttender();
 
-        machine.doWork(machine.getState());
+        machine.doWork();
         housework.setAttender(machine.getState().findNextAttender(attender));
         housework.setUserNotificationDate(LocalDateTime.now());
 

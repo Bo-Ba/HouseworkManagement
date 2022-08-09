@@ -12,21 +12,17 @@ import javax.persistence.Transient;
 @DiscriminatorValue(value = "1")
 public class DishwasherRunningState extends State {
     private final static String STATE_NAME = "Dishwasher running";
-    @Transient
-    @Autowired
-    private DishwasherStatesFactory dishwasherStatesFactory;
-
     public DishwasherRunningState() {
         super(STATE_NAME);
     }
 
     @Override
     public void next(Machine machine) {
-        machine.setState(dishwasherStatesFactory.createDishwasherToUnpackState());
+        machine.setState(new DishwasherToUnpackState());
     }
 
     @Override
     public void prev(Machine machine) {
-        machine.setState(dishwasherStatesFactory.createDishwasherToPackState());
+        machine.setState(new DishwasherToPackState());
     }
 }

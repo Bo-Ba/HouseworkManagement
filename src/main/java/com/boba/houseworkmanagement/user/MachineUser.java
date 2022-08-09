@@ -2,6 +2,7 @@ package com.boba.houseworkmanagement.user;
 
 import com.boba.houseworkmanagement.machine.Machine;
 import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -27,7 +28,7 @@ public class MachineUser {
     @Getter
     private String username;
 
-    @ManyToMany(cascade = {CascadeType.ALL})
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
             name = "MachineUser_Machine",
             joinColumns = {@JoinColumn(name = "MachineUserId")},
@@ -39,8 +40,7 @@ public class MachineUser {
 
     }
 
-    public MachineUser(Long machineUserId, String username) {
-        this.machineUserId = machineUserId;
+    public MachineUser(String username) {
         this.username = username;
     }
 
